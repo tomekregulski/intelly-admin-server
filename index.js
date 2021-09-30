@@ -7,9 +7,15 @@ const { unlink } = require('fs/promises');
 const app = express();
 const PORT = process.env.PORT || 4500;
 
-app.use(express.static('/'));
 app.use(cors());
+
+app.use(express.static('/'));
+
 app.use(fileUpload());
+
+app.get('/', (req, res) => {
+  return res.status(200).send({ msg: 'Hello' });
+});
 
 app.post('/upload', (req, res) => {
   if (!req.files) {
@@ -44,7 +50,7 @@ app.post('/upload', (req, res) => {
 
     unlink(path).then(console.log(`successfully deleted file at ${path}`));
     console.log(response);
-    res.send(response);
+    res.status(200).send(response);
   });
 });
 
