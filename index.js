@@ -40,13 +40,13 @@ app.post('/upload', (req, res) => {
 
   res.status(200).send(path);
 
-  // let response = [];
+  let response = [];
 
-  // extract(path, { splitPages: false }, function (err, pages) {
-  //   if (err) {
-  //     console.dir(err);
-  //     return;
-  //   }
+  extract(path, { splitPages: false }, function (err, pages) {
+    if (err) {
+      console.dir(err);
+      return;
+    }
 
   //   const condensed = pages[0].replace(/\s/g, '/').split('/');
   //   for (var i = 0; i < condensed.length; i++) {
