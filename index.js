@@ -7,7 +7,6 @@ const { unlink } = require('fs/promises');
 const app = express();
 const PORT = process.env.PORT || 4500;
 
-// middle ware
 app.use(express.static('/'));
 app.use(cors());
 app.use(fileUpload());
