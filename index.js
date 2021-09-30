@@ -64,50 +64,6 @@ app.post('/upload', (req, res) => {
   pdfParser.loadPDF(path);
 });
 
-// app.post('/upload', (req, res) => {
-//   // res.header('Access-Control-Allow-Origin', '*');
-
-//   if (!req.files) {
-//     return res.status(500).send({ msg: 'file is not found' });
-//   }
-
-//   const myFile = req.files.file;
-//   console.log(myFile.name);
-
-//   myFile.mv(`${__dirname}/${myFile.name}`, function (err) {
-//     if (err) {
-//       console.log(err);
-//       return res.status(500).send({ msg: 'error' });
-//     }
-//   });
-
-//   path = `${__dirname}/${myFile.name}`;
-
-//   console.log(path);
-
-//   let response = [];
-
-//   extract(path, { splitPages: false }, function (err, pages) {
-//     if (err) {
-//       console.dir(err);
-//       return;
-//     }
-
-//     // const condensed = pages[0].replace(/\s/g, '/').split('/');
-//     // for (var i = 0; i < condensed.length; i++) {
-//     //   condensed[i].includes('CLARM') && response.push(true + 'CLARM');
-//     //   condensed[i].includes('WHFDSCAN') && response.push(true + 'WHFDSCAN');
-//     // }
-
-//     //
-//     // console.log(response);
-//     // res.status(200).send(response);
-//   });
-
-//   console.log(path);
-//   res.status(200).send(path);
-// });
-
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}!`);
 });
