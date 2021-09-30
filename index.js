@@ -18,6 +18,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/upload', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+
   if (!req.files) {
     return res.status(500).send({ msg: 'file is not found' });
   }
