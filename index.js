@@ -1,43 +1,54 @@
 const express = require('express');
-const { spawn } = require('child_process');
+const fileUpload = require('express-fileupload');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const path = require('path');
+const extract = require('pdf-text-extract');
+const { unlink } = require('fs/promises');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4500;
 
+// middle ware
+app.use(express.static('/'));
 app.use(cors());
+app.use(fileUpload());
 
-app.use(bodyParser.json());
+app.post('/upload', (req, res) => {
+  if (!req.files) {
+    return res.status(500).send({ msg: 'file is not found' });
+  }
 
-app.use(bodyParser.urlencoded({ extended: true }));
+  const myFile = req.files.file;
+  console.log(myFile);
 
-app.use(express.json());
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-  console.log('get');
-  let dataToSend;
-  let largeDataSet = [];
-  // spawn new child process to call the python script
-  const python = spawn('python', ['search.py']);
-
-  // collect data from script
-  python.stdout.on('data', function (data) {
-    console.log('Pipe data from python script ...');
-    dataToSend = data.toString();
+  myFile.mv(`${__dirname}/${myFile.name}`, function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send({ msg: 'error' });
+    }
   });
-  // in close event we are sure that stream from child process is closed
-  python.on('close', (code) => {
-    console.log(`child process close all stdio with code ${code}`);
-    // send data to browser
-    res.send(dataToSend);
+
+  path = `${__dirname}/${myFile.name}`;
+
+  let response = [];
+
+  extract(path, { splitPages: false }, function (err, pages) {
+    if (err) {
+      console.dir(err);
+      return;
+    }
+
+    const condensed = pages[0].replace(/\s/g, '/').split('/');
+    for (var i = 0; i < condensed.length; i++) {
+      condensed[i].includes('CLARM') && response.push(true + 'CLARM');
+      condensed[i].includes('WHFDSCAN') && response.push(true + 'WHFDSCAN');
+    }
+
+    unlink(path).then(console.log(`successfully deleted file at ${path}`));
+    console.log(response);
+    res.send(response);
   });
 });
 
-app.listen(port, () =>
-  console.log(`Example app listening on port 
-${port}!`)
-);
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}!`);
+});
