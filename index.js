@@ -48,16 +48,16 @@ app.post('/upload', (req, res) => {
       return;
     }
 
-  //   const condensed = pages[0].replace(/\s/g, '/').split('/');
-  //   for (var i = 0; i < condensed.length; i++) {
-  //     condensed[i].includes('CLARM') && response.push(true + 'CLARM');
-  //     condensed[i].includes('WHFDSCAN') && response.push(true + 'WHFDSCAN');
-  //   }
+    //   const condensed = pages[0].replace(/\s/g, '/').split('/');
+    //   for (var i = 0; i < condensed.length; i++) {
+    //     condensed[i].includes('CLARM') && response.push(true + 'CLARM');
+    //     condensed[i].includes('WHFDSCAN') && response.push(true + 'WHFDSCAN');
+    //   }
 
-  //   unlink(path).then(console.log(`successfully deleted file at ${path}`));
-  //   console.log(response);
-  //   res.status(200).send(response);
-  // });
+    //   unlink(path).then(console.log(`successfully deleted file at ${path}`));
+    //   console.log(response);
+    //   res.status(200).send(response);
+  });
 });
 
 app.listen(PORT, () => {
