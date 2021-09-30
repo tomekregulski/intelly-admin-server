@@ -18,14 +18,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/upload', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  // res.header('Access-Control-Allow-Origin', '*');
 
   if (!req.files) {
     return res.status(500).send({ msg: 'file is not found' });
   }
 
   const myFile = req.files.file;
-  console.log(myFile);
+  console.log(myFile.name);
 
   myFile.mv(`${__dirname}/${myFile.name}`, function (err) {
     if (err) {
@@ -36,6 +36,8 @@ app.post('/upload', (req, res) => {
 
   path = `${__dirname}/${myFile.name}`;
 
+  console.log(path);
+
   let response = [];
 
   extract(path, { splitPages: false }, function (err, pages) {
@@ -44,19 +46,19 @@ app.post('/upload', (req, res) => {
       return;
     }
 
-    console.log(path);
-    res.status(200).send(path);
+    // const condensed = pages[0].replace(/\s/g, '/').split('/');
+    // for (var i = 0; i < condensed.length; i++) {
+    //   condensed[i].includes('CLARM') && response.push(true + 'CLARM');
+    //   condensed[i].includes('WHFDSCAN') && response.push(true + 'WHFDSCAN');
+    // }
 
-    //   const condensed = pages[0].replace(/\s/g, '/').split('/');
-    //   for (var i = 0; i < condensed.length; i++) {
-    //     condensed[i].includes('CLARM') && response.push(true + 'CLARM');
-    //     condensed[i].includes('WHFDSCAN') && response.push(true + 'WHFDSCAN');
-    //   }
-
-    //   unlink(path).then(console.log(`successfully deleted file at ${path}`));
-    //   console.log(response);
-    //   res.status(200).send(response);
+    // unlink(path).then(console.log(`successfully deleted file at ${path}`));
+    // console.log(response);
+    // res.status(200).send(response);
   });
+
+  console.log(path);
+  res.status(200).send(path);
 });
 
 app.listen(PORT, () => {
