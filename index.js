@@ -17,20 +17,7 @@ app.use(express.static('/'));
 app.use(fileUpload());
 
 app.get('/', (req, res) => {
-  let pdfParser = new PDFParser(this, 1);
-
-  pdfParser.on('pdfParser_dataError', (errData) =>
-    console.error(errData.parserError)
-  );
-  pdfParser.on('pdfParser_dataReady', (pdfData) => {
-    fs.writeFile('./pdf-content.txt', pdfParser.getRawTextContent(), () => {
-      console.log('Done.');
-    });
-  });
-
-  pdfParser.loadPDF('./sample.pdf');
-
-  res.status(200).send({ msg: 'done' });
+  res.status(200).send({ msg: 'hello' });
 });
 
 app.post('/upload', (req, res) => {
