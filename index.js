@@ -36,10 +36,6 @@ app.post('/upload', (req, res) => {
 
   path = `${__dirname}/${myFile.name}`;
 
-  console.log(path);
-
-  res.status(200).send(path);
-
   let response = [];
 
   extract(path, { splitPages: false }, function (err, pages) {
@@ -47,6 +43,9 @@ app.post('/upload', (req, res) => {
       console.dir(err);
       return;
     }
+
+    console.log(path);
+    res.status(200).send(path);
 
     //   const condensed = pages[0].replace(/\s/g, '/').split('/');
     //   for (var i = 0; i < condensed.length; i++) {
