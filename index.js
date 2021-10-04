@@ -26,25 +26,20 @@ app.get('/', (req, res) => {
   res.status(200).send({ msg: 'hello' });
 });
 
-router.get(
-  '/',
-  // authJwt,
-  // AdminOnlyRoute,
-  async (req, res) => {
-    try {
-      const allUsers = await User.findAll({
-        attributes: {
-          exclude: ['password'],
-        },
-      });
-      const userData = allUsers.map((user) => user.get({ plain: true }));
-      res.status(200).json(userData);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
+app.get('/', async (req, res) => {
+  try {
+    const allUsers = await User.findAll({
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+    const userData = allUsers.map((user) => user.get({ plain: true }));
+    res.status(200).json(userData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
-);
+});
 
 app.post('/excel/upload', (req, res) => {
   try {
