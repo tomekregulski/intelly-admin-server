@@ -39,10 +39,7 @@ app.post('/excel/upload', (req, res) => {
       return res.status(500).send({ msg: 'please only upload an Excel file' });
     }
 
-    console.log(req.files.file.mimetype);
-
     const myFile = req.files.file;
-    console.log(myFile.name);
 
     myFile.mv(`${__dirname}/${myFile.name}`, function (err) {
       if (err) {
@@ -52,8 +49,6 @@ app.post('/excel/upload', (req, res) => {
     });
 
     let path = `${__dirname}/${myFile.name}`;
-
-    console.log(path);
 
     readXlsxFile(path).then((rows) => {
       // skip header
@@ -86,17 +81,15 @@ app.post('/excel/upload', (req, res) => {
         dataRows.push(newRow);
       });
 
-      console.log(dataRows.length);
       WholeFoodsTimeframeData.bulkCreate(dataRows)
         .then(() => {
           res.status(200).send({
             message: 'Uploaded the file successfully: ' + req.files.file.name,
           });
         })
-        .then(console.log('done'))
-        .then(
-          unlink(path).then(console.log(`successfully deleted file at ${path}`))
-        )
+        // .then(
+        //   unlink(path).then(console.log(`successfully deleted file at ${path}`))
+        // )
         .catch((error) => {
           res.status(500).send({
             message: 'Fail to import data into database!',
