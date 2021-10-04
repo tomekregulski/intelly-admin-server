@@ -3,7 +3,7 @@ const sequelize = require('./config/connection');
 const fileUpload = require('express-fileupload');
 const csv = require('@fast-csv/parse');
 const readXlsxFile = require('read-excel-file/node');
-const { Test, WholeFoodsTimeframeData } = require('./models');
+const { User, WholeFoodsTimeframeData } = require('./models');
 // const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
@@ -25,6 +25,26 @@ app.use(fileUpload());
 app.get('/', (req, res) => {
   res.status(200).send({ msg: 'hello' });
 });
+
+router.get(
+  '/',
+  // authJwt,
+  // AdminOnlyRoute,
+  async (req, res) => {
+    try {
+      const allUsers = await User.findAll({
+        attributes: {
+          exclude: ['password'],
+        },
+      });
+      const userData = allUsers.map((user) => user.get({ plain: true }));
+      res.status(200).json(userData);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  }
+);
 
 app.post('/excel/upload', (req, res) => {
   try {
