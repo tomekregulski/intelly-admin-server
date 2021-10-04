@@ -86,12 +86,14 @@ app.post('/excel/upload', (req, res) => {
         dataRows.push(newRow);
       });
 
+      console.log(dataRows.length);
       WholeFoodsTimeframeData.bulkCreate(dataRows)
         .then(() => {
           res.status(200).send({
             message: 'Uploaded the file successfully: ' + req.files.file.name,
           });
         })
+        .then(console.log('done'))
         .then(
           unlink(path).then(console.log(`successfully deleted file at ${path}`))
         )
