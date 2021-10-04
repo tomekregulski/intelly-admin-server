@@ -1,4 +1,5 @@
 const { WholeFoodsTimeframeData } = require('../models');
+const simmerSasoSeeds = require('./simmerSasoSeeds.json');
 
 const sequelize = require('../config/connection');
 
