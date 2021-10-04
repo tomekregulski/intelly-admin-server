@@ -91,6 +91,7 @@ app.post('/excel/upload', (req, res) => {
         //   unlink(path).then(console.log(`successfully deleted file at ${path}`))
         // )
         .catch((error) => {
+          console.log(error);
           res.status(500).send({
             message: 'Fail to import data into database!',
             error: error.message,
