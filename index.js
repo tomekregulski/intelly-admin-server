@@ -10,6 +10,8 @@ const cors = require('cors');
 const extract = require('pdf-text-extract');
 const { unlink } = require('fs/promises');
 
+const codes = require('./invoiceCodes');
+
 let fs = require('fs'),
   PDFParser = require('pdf2json');
 
@@ -167,7 +169,7 @@ app.post('/csv/upload', (req, res) => {
     });
 });
 
-app.post('/upload', (req, res) => {
+app.post('/invoice-upload', (req, res) => {
   if (!req.files) {
     return res.status(500).send({ msg: 'file is not found' });
   }
@@ -182,7 +184,7 @@ app.post('/upload', (req, res) => {
     }
   });
 
-  path = `${__dirname}/${myFile.name}`;
+  let path = `${__dirname}/${myFile.name}`;
 
   console.log(path);
 
@@ -196,7 +198,29 @@ app.post('/upload', (req, res) => {
 
   pdfParser.on('pdfParser_dataReady', (pdfData) => {
     data = pdfParser.getRawTextContent();
-    data.includes('WHFDSCAN') && response.push('WHFDSCAN');
+
+    function count(main_str, sub_str) {
+      main_str += '';
+      sub_str += '';
+
+      if (sub_str.length <= 0) {
+        return main_str.length + 1;
+      }
+
+      subStr = sub_str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return (main_str.match(new RegExp(subStr, 'gi')) || []).length;
+    }
+
+    for (const code in codes) {
+      codeCount = count(data, code);
+      response.push({
+        code,
+        count: codeCount,
+        definition: codes[code],
+      });
+    }
+
+    // data.includes('WHFDSCAN') && response.push('WHFDSCAN');
     fs.writeFile('./pdf-content.txt', pdfParser.getRawTextContent(), () => {
       console.log('Done.');
     });
