@@ -104,9 +104,11 @@ app.post('/excel/upload', (req, res) => {
             message: 'Uploaded the file successfully: ' + req.files.file.name,
           });
         })
-        // .then(
-        //   unlink(path).then(console.log(`successfully deleted file at ${path}`))
-        // )
+        .then(() => {
+          unlink(path).then(
+            console.log(`successfully deleted file at ${path}`)
+          );
+        })
         .catch((error) => {
           console.log(error);
           res.status(500).send({
@@ -160,12 +162,14 @@ app.post('/csv/upload', (req, res) => {
     .on('end', () => {
       console.log(dataRows);
       Test.bulkCreate(dataRows)
-        .then(res.send('Data successfully uploaded!'))
-        .then(
-          unlink(path).then(console.log(`successfully deleted file at ${path}`))
-        );
-
-      // );
+        .then(() => {
+          res.send('Data successfully uploaded!');
+        })
+        .then(() => {
+          unlink(path).then(
+            console.log(`successfully deleted file at ${path}`)
+          );
+        });
     });
 });
 
@@ -226,10 +230,12 @@ app.post('/invoice-upload', (req, res) => {
     });
 
     res.status(200).send(response);
-    unlink(path).then(console.log(`successfully deleted file at ${path}`));
-    unlink('./pdf-content.txt').then(
-      console.log(`successfully deleted file at ./pdf-content.txt`)
-    );
+    unlink(path).then(() => {
+      console.log(`successfully deleted file at ${path}`);
+    });
+    unlink('./pdf-content.txt').then(() => {
+      console.log(`successfully deleted file at ./pdf-content.txt`);
+    });
   });
 
   pdfParser.loadPDF(path);
