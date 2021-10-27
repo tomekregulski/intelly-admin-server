@@ -22,7 +22,7 @@ Additionally, while not available to the guest account, there is a similar servi
 
 # Additional Goals for Development
 
-The above description embodies the specificity of the goals of this project. Our hope is to gradually build out a list of other similar tasks that are in need of automation, and provide a simple solution to our clients. This section will be expanded in greater detail as they become available.
+The above description embodies the specificity of the goals of this project. Our hope is to gradually build out a list of other similar tasks that are in need of automation, and provide a simple solution to our clients. This section will be expanded in greater detail as they become available. Additionally, we will soon be implementing proper role-based protection for all endpoints.
 
 # Installation and Contribution
 
