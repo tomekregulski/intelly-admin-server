@@ -1,6 +1,6 @@
 # Intelly - General Overview and Current State
 
-Intelly is a platform being built to help small-to-medium-sized food and beverage brands manage various aspects of their business. The project is divided into separate repos to allow indeoendent development. Below, you can find a list of the specific fton and back ends that make up this project, links to their individual repos, as well as whether or not they have been deployed for public demo.
+Intelly is a platform being built to help small-to-medium-sized food and beverage brands manage various aspects of their business. The project is divided into separate repos to allow independent development. Below, you can find a list of the specific front and back ends that make up this project, links to their individual repos, as well as whether or not they have been deployed for public demo.
 
 The public demos should be accessed thought this link: https://gallant-wing-415919.netlify.app/
 This will bring you to a login page, which you can enter with the following credentials:
@@ -22,7 +22,7 @@ Additionally, while not available to the guest account, there is a similar servi
 
 # Additional Goals for Development
 
-The above description embodies the specificity of the goals of this project. Our hope is to gradually build out a list of other similar tasks that are in need of automation, and provide a simple solution to our clients. This section will be expanded in greater detail as they become available.
+The above description embodies the specificity of the goals of this project. Our hope is to gradually build out a list of other similar tasks that are in need of automation, and provide a simple solution to our clients. This section will be expanded in greater detail as they become available. Additionally, we will soon be implementing proper role-based protection for all endpoints.
 
 # Installation and Contribution
 
@@ -51,3 +51,4 @@ The following is a list of all related projects that have entered some stage of 
 <a href="https://github.com/tomekregulski/intelly-form-builder-client">Form Builder - Front End</a> - Early Stage, Not Deployed for Demo <br>
 <a href="https://github.com/tomekregulski/intelly-form-builder-server">Form Builder - Back End</a> - Early Stage, Not Deployed for Demo <br>
 <a href="https://github.com/tomekregulski/intelly-schedule-client">Schedule - Front End</a> - Early Stage, Not Deployed for Demo <br>
+
