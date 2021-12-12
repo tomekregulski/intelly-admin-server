@@ -1,5 +1,8 @@
 const express = require('express');
 const sequelize = require('./config/connection');
+
+const errorHandler = require('./handlers/error');
+
 const fileUpload = require('express-fileupload');
 const csv = require('@fast-csv/parse');
 const readXlsxFile = require('read-excel-file/node');
@@ -241,8 +244,12 @@ app.post('/invoice-upload', (req, res) => {
   pdfParser.loadPDF(path);
 });
 
-sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}!`);
-  });
+app.use(function (req, res, next) {
+  let err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
+
+app.use(errorHandler);
+
+module.exports = app;
